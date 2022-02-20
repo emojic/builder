@@ -29,7 +29,8 @@
 
         const renderImage = (unicode, group) => {
             const img = document.createElement('img');
-            img.src = `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`;
+            // img.src = `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`;
+            img.src = `https://raw.githubusercontent.com/emojic/builder/main/dist/${group}/stack/svg/sprite.stack.svg#${unicode}`
             img.title = unicode;     
             document.body.appendChild(img);
         }

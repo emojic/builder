@@ -14,16 +14,15 @@ const config = {
         spacing: {},
         transform: ['svgo'],
         meta: null,
-        align: null,
-        dest: 'svg'
+        align: null
     },
     svg: {},
     variables: {},
     mode: {
-        css: true,
-        view: true,
-        defs: true,
-        symbol: true,
+        css: false,
+        view: false,
+        defs: false,
+        symbol: false,
         stack: true
     }
 }
