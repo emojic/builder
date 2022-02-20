@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji preview</title>
+    <style>
+        body {
+            font-size: 50px;
+        }
+        img {
+            height: 1em;
+            width: 1em;
+            line-height: 1em;
+            margin: 10px;
+            vertical-align: middle;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const fetchEmoji = async (url) => {
+            const data = await fetch(url);
+            return await data.json();
+        }
+
+        const renderImage = (unicode, group) => {
+            const img = document.createElement('img');
+            img.src = `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`;
+            img.title = unicode;     
+            document.body.appendChild(img);
+        }
+    
+        const renderEmoji = emoji => {
+            Object.values(emoji.groups).forEach(group => {
+                group.emoji.forEach(unicode => renderImage(unicode, group.name));
+            });
+        }
+
+        fetchEmoji('./emoji.json').then(renderEmoji);
+    </script>
+</body>
+</html>

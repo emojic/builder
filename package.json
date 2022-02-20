@@ -1,0 +1,14 @@
+{
+  "name": "emojic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "svg-sprite": "^1.5.4"
+  }
+}
