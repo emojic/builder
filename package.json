@@ -1,11 +1,11 @@
 {
   "name": "emojic",
   "version": "1.0.0",
-  "description": "",
+  "description": "Library that provides standard Unicode emoji support across all platforms.",
   "main": "build.js",
   "scripts": {
     "build": "node build.js",
-    "emoji": "git clone git@github.com:twitter/twemoji.git"
+    "twemoji": "git clone git@github.com:twitter/twemoji.git"
   },
   "author": "",
   "license": "ISC",

@@ -53,16 +53,18 @@
 
         const createEmoji = (unicode, group) => {            
             const img = document.createElement('img');
-            img.setAttribute('data-src', `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`);
+            // const baseUrl = 'https://cdn.jsdelivr.net/gh/emojic/builder@master';
+            const baseUrl = '.';
+            img.setAttribute('data-src', `${baseUrl}/dist/${group}/stack/svg/sprite.stack.svg#${unicode}`);
             img.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
             observer.observe(img);
             return img;
         }
-    
+
         const renderEmoji = groups => {
-            Object.values(groups).forEach(group => {
-                group.emoji.forEach(unicode => {
-                    const emoji = createEmoji(unicode, group.name);
+            Object.keys(groups).forEach(group => {
+                groups[group].emoji.forEach(unicode => {
+                    const emoji = createEmoji(unicode, group);
                     root.appendChild(emoji);
                 });
             });

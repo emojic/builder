@@ -49,4 +49,4 @@ const compile = (group, emoji) => {
     });
 }
 
-Object.values(groups).forEach(group => compile(group.name, group.emoji));
+Object.keys(groups).forEach(group => compile(group, groups[group].emoji));
