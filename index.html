@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emoji preview</title>
     <style>
-        body {
-            font-size: 50px;
+        #root {
+            font-size: 36px;
+            overflow-y: scroll;
+            height: 50vh;
         }
         img {
             height: 1em;
@@ -18,26 +20,51 @@
             align-items: center;
             justify-content: center;
         }
+
+        #root::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #root::-webkit-scrollbar-thumb {
+            background-color: #999;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
+    <div id="root"></div>
     <script>
+        const root = document.querySelector('#root');
+
         const fetchEmoji = async (url) => {
             const data = await fetch(url);
             return await data.json();
         }
 
-        const renderImage = (unicode, group) => {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.intersectionRatio >= 0.1) {
+                    entry.target.src = entry.target.getAttribute('data-src');
+                    entry.target.removeAttribute('data-src');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { root, threshold: 0.1 });
+
+        const createEmoji = (unicode, group) => {            
             const img = document.createElement('img');
-            // img.src = `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`;
-            img.src = `https://raw.githubusercontent.com/emojic/builder/main/dist/${group}/stack/svg/sprite.stack.svg#${unicode}`
-            img.title = unicode;     
-            document.body.appendChild(img);
+            img.setAttribute('data-src', `./dist/${group}/stack/svg/sprite.stack.svg#${unicode}`);
+            img.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+            observer.observe(img);
+            return img;
         }
     
-        const renderEmoji = emoji => {
-            Object.values(emoji.groups).forEach(group => {
-                group.emoji.forEach(unicode => renderImage(unicode, group.name));
+        const renderEmoji = groups => {
+            Object.values(groups).forEach(group => {
+                group.emoji.forEach(unicode => {
+                    const emoji = createEmoji(unicode, group.name);
+                    root.appendChild(emoji);
+                });
             });
         }
 

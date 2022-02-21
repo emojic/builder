@@ -1,14 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const emoji = require('./emoji.json');
+const groups = require('./emoji.json');
 const SVGSpriter = require('svg-sprite');
 
 const config = {
-    dest: './dist',
     log: true,
     shape: {
         id: {
-            generator: (filepath) => path.basename(filepath).replace('emoji_u', '').replace('.svg', ''),
+            generator: (filepath) => path.basename(filepath).replace('.svg', ''),
         },
         dimension: {},
         spacing: {},
@@ -31,9 +30,12 @@ const compile = (group, emoji) => {
     const spriter = new SVGSpriter({ ...config, dest: `./dist/${group}` });
 
     emoji.map(name => {
-        const file = `./emoji/${name}.svg`;
+        const file = `./twemoji/assets/svg/${name}.svg`;
+
         if(fs.existsSync(file)) {
             spriter.add(path.resolve(file), file, fs.readFileSync(path.resolve(file), { encoding: 'utf-8' }));
+        } else {
+            spriter.add(path.resolve(file), file, fs.readFileSync(path.resolve("./not-found.svg"), { encoding: 'utf-8' }));
         }
     });
     
@@ -47,4 +49,4 @@ const compile = (group, emoji) => {
     });
 }
 
-Object.values(emoji.groups).forEach(group => compile(group.name, group.emoji));
+Object.values(groups).forEach(group => compile(group.name, group.emoji));

@@ -4,7 +4,8 @@
   "description": "",
   "main": "build.js",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "emoji": "git clone git@github.com:twitter/twemoji.git"
   },
   "author": "",
   "license": "ISC",
